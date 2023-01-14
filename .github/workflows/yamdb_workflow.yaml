@@ -3,7 +3,7 @@ name: api_yamdb workflow
 on:
   push:
     branches:
-      - "main"
+      - "master"
 
 jobs:
   tests:
