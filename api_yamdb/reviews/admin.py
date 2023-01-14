@@ -1,6 +1,7 @@
 """Admin site settings of the 'Reviews' application."""
 
 from django.contrib import admin
+
 from reviews.models import Category, Comment, Genre, Review, Title
 
 

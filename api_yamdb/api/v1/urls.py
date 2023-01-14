@@ -1,17 +1,18 @@
 """URLs configuration of the 'api' application v1."""
 
+from django.urls import include, path
+from rest_framework.routers import DefaultRouter
+
 from api.v1.views import (
     CategoryViewSet,
     CommentViewSet,
     GenreViewSet,
+    get_token,
     ReviewViewSet,
+    signup,
     TitleViewSet,
     UserViewset,
-    get_token,
-    signup,
 )
-from django.urls import include, path
-from rest_framework.routers import DefaultRouter
 
 router_v1 = DefaultRouter()
 
