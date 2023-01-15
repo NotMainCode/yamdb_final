@@ -6,10 +6,8 @@ services:
     restart: on-failure
     volumes:
       - postgresql:/var/lib/postgresql/data/
-    env_file:
-      - ./.env
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -d $${DB_NAME} -U $${POSTGRES_USER} -p 5432" ]
+      test: [ "CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER} -p 5432" ]
       interval: 1m30s
       timeout: 10s
       retries: 3
@@ -22,8 +20,6 @@ services:
       - media_value:/app/media/
     depends_on:
       - db
-    env_file:
-      - ./.env
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8000/admin" ]
       interval: 1m30s
@@ -42,7 +38,7 @@ services:
     depends_on:
       - web
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost/admin" ]
+      test: [ "CMD", "curl", "-f", "http://<your_pub_IP>/admin" ]
       interval: 1m30s
       timeout: 10s
       retries: 3
