@@ -38,7 +38,7 @@ services:
     depends_on:
       - web
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://<your_pub_IP>/admin" ]
+      test: [ "CMD", "curl", "-f", "http://<your_pub_ip>/admin" ]
       interval: 1m30s
       timeout: 10s
       retries: 3
