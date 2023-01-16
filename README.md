@@ -49,7 +49,7 @@ GitHub Actions workflow jobs:
   from the DockerHub repository to a remote server. Creation and start containers.
   Django app: collectstatic, migrate.
 
-GitHub Actions workflow will start after pushing to the master branch.
+GitHub Actions workflow trigger: ```push```
 
 ## Technology
 
