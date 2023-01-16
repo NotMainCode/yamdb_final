@@ -11,11 +11,13 @@ class Test06CommentAPI:
             f'/api/v1/titles/{titles[0]["id"]}/reviews/{reviews[0]["id"]}/comments/'
         )
         assert response.status_code != 404, (
-            "Страница `/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
+            "Страница "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
             "не найдена, проверьте этот адрес в *urls.py*"
         )
         assert response.status_code == 200, (
-            "Проверьте, что при GET запросе `/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
+            "Проверьте, что при GET запросе "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
             "без токена авторизации возвращается статус 200"
         )
 
@@ -26,8 +28,10 @@ class Test06CommentAPI:
             data=data,
         )
         assert response.status_code == 201, (
-            "Проверьте, что при POST запросе `/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
-            "с правильными данными возвращает статус 201, api доступен для любого аутентифицированного пользователя"
+            "Проверьте, что при POST запросе "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
+            "с правильными данными возвращает статус 201, "
+            "api доступен для любого аутентифицированного пользователя"
         )
         return response
 
@@ -42,7 +46,8 @@ class Test06CommentAPI:
             data=data,
         )
         assert response.status_code == 400, (
-            "Проверьте, что при POST запросе `/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
+            "Проверьте, что при POST запросе "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
             "с не правильными данными возвращает статус 400"
         )
         self.create_comment(
@@ -66,8 +71,10 @@ class Test06CommentAPI:
         )
 
         assert type(response.json().get("id")) == int, (
-            "Проверьте, что при POST запросе `/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
-            "возвращаете данные созданного объекта. Значение `id` нет или не является целым числом."
+            "Проверьте, что при POST запросе "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
+            "возвращаете данные созданного объекта. "
+            "Значение `id` нет или не является целым числом."
         )
 
         data = {"text": "kjdfg"}
@@ -75,8 +82,10 @@ class Test06CommentAPI:
             "/api/v1/titles/999/reviews/999/comments/", data=data
         )
         assert response.status_code == 404, (
-            "Проверьте, что при POST запросе `/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
-            "с не существующим title_id или review_id возвращается статус 404."
+            "Проверьте, что при POST запросе "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
+            "с не существующим title_id или review_id "
+            "возвращается статус 404."
         )
         data = {"text": "аывв"}
         response = admin_client.post(
@@ -84,7 +93,8 @@ class Test06CommentAPI:
             data=data,
         )
         assert response.status_code == 201, (
-            "Проверьте, что при POST запросе `/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
+            "Проверьте, что при POST запросе "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
             "на отзыв можно оставить несколько комментариев."
         )
 
@@ -92,37 +102,52 @@ class Test06CommentAPI:
             f'/api/v1/titles/{titles[0]["id"]}/reviews/{reviews[0]["id"]}/comments/'
         )
         assert response.status_code == 200, (
-            "Проверьте, что при GET запросе `/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
+            "Проверьте, что при GET запросе "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
             "возвращает статус 200"
         )
         data = response.json()
         assert "count" in data, (
-            "Проверьте, что при GET запросе `/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
-            "возвращаете данные с пагинацией. Не найден параметр `count`"
+            "Проверьте, что при GET запросе "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
+            "возвращаете данные с пагинацией. "
+            "Не найден параметр `count`"
         )
         assert "next" in data, (
-            "Проверьте, что при GET запросе `/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
-            "возвращаете данные с пагинацией. Не найден параметр `next`"
+            "Проверьте, что при GET запросе "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
+            "возвращаете данные с пагинацией. "
+            "Не найден параметр `next`"
         )
         assert "previous" in data, (
-            "Проверьте, что при GET запросе `/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
-            "возвращаете данные с пагинацией. Не найден параметр `previous`"
+            "Проверьте, что при GET запросе "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
+            "возвращаете данные с пагинацией. "
+            "Не найден параметр `previous`"
         )
         assert "results" in data, (
-            "Проверьте, что при GET запросе `/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
-            "возвращаете данные с пагинацией. Не найден параметр `results`"
+            "Проверьте, что при GET запросе "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
+            "возвращаете данные с пагинацией. "
+            "Не найден параметр `results`"
         )
         assert data["count"] == 4, (
-            "Проверьте, что при GET запросе `/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
-            "возвращаете данные с пагинацией. Значение параметра `count` не правильное"
+            "Проверьте, что при GET запросе "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
+            "возвращаете данные с пагинацией. "
+            "Значение параметра `count` не правильное"
         )
         assert type(data["results"]) == list, (
-            "Проверьте, что при GET запросе `/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
-            "возвращаете данные с пагинацией. Тип параметра `results` должен быть список"
+            "Проверьте, что при GET запросе "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
+            "возвращаете данные с пагинацией. "
+            "Тип параметра `results` должен быть список"
         )
         assert len(data["results"]) == 4, (
-            "Проверьте, что при GET запросе `/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
-            "возвращаете данные с пагинацией. Значение параметра `results` не правильное"
+            "Проверьте, что при GET запросе "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
+            "возвращаете данные с пагинацией. "
+            "Значение параметра `results` не правильное"
         )
 
         comment = None
@@ -130,23 +155,31 @@ class Test06CommentAPI:
             if item.get("text") == "qwerty":
                 comment = item
         assert comment, (
-            "Проверьте, что при GET запросе `/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
-            "возвращаете данные с пагинацией. Значение параметра `results` неправильное, "
+            "Проверьте, что при GET запросе "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
+            "возвращаете данные с пагинацией. "
+            "Значение параметра `results` неправильное, "
             "`text` не найдено или не сохранилось при POST запросе."
         )
         assert comment.get("author") == admin.username, (
-            "Проверьте, что при GET запросе `/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
+            "Проверьте, что при GET запросе "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
             "возвращаете данные с пагинацией. "
-            "Значение параметра `results` неправильное, `author` не найдено или не сохранилось при POST запросе."
+            "Значение параметра `results` неправильное, "
+            "`author` не найдено или не сохранилось при POST запросе."
         )
         assert comment.get("pub_date"), (
-            "Проверьте, что при GET запросе `/api/v1/titles/{title_id}/reviews/{review_id}/comments/`"
-            " возвращаете данные с пагинацией. Значение параметра `results` неправильное, `pub_date` не найдено."
+            "Проверьте, что при GET запросе "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/`"
+            " возвращаете данные с пагинацией. "
+            "Значение параметра `results` неправильное, `pub_date` не найдено."
         )
         assert type(comment.get("id")) == int, (
-            "Проверьте, что при GET запросе `/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
+            "Проверьте, что при GET запросе "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
             "возвращаете данные с пагинацией. "
-            "Значение параметра `results` неправильное, значение `id` нет или не является целым числом."
+            "Значение параметра `results` неправильное, "
+            "значение `id` нет или не является целым числом."
         )
 
     @pytest.mark.django_db(transaction=True)
@@ -157,24 +190,30 @@ class Test06CommentAPI:
         pre_url = f'/api/v1/titles/{titles[0]["id"]}/reviews/{reviews[0]["id"]}/comments/'
         response = client.get(f'{pre_url}{comments[0]["id"]}/')
         assert response.status_code != 404, (
-            "Страница `/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
+            "Страница "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
             "не найдена, проверьте этот адрес в *urls.py*"
         )
         assert response.status_code == 200, (
-            "Проверьте, что при GET запросе `/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
+            "Проверьте, что при GET запросе "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
             "без токена авторизации возвращается статус 200"
         )
         data = response.json()
         assert type(data.get("id")) == int, (
-            "Проверьте, что при GET запросе `/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
-            "возвращаете данные объекта. Значение `id` нет или не является целым числом."
+            "Проверьте, что при GET запросе "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
+            "возвращаете данные объекта. "
+            "Значение `id` нет или не является целым числом."
         )
         assert data.get("text") == reviews[0]["text"], (
-            "Проверьте, что при GET запросе `/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
+            "Проверьте, что при GET запросе "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
             "возвращаете данные объекта. Значение `text` неправильное."
         )
         assert data.get("author") == reviews[0]["author"], (
-            "Проверьте, что при GET запросе `/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
+            "Проверьте, что при GET запросе "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
             "возвращаете данные объекта. Значение `author` неправильное."
         )
 
@@ -183,22 +222,26 @@ class Test06CommentAPI:
             f'{pre_url}{comments[0]["id"]}/', data=data
         )
         assert response.status_code == 200, (
-            "Проверьте, что при PATCH запросе `/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
+            "Проверьте, что при PATCH запросе "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
             "возвращается статус 200"
         )
         data = response.json()
         assert data.get("text") == "rewq", (
-            "Проверьте, что при PATCH запросе `/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
+            "Проверьте, что при PATCH запросе "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
             "возвращаете данные объекта. Значение `text` изменено."
         )
         response = admin_client.get(f'{pre_url}{comments[0]["id"]}/')
         assert response.status_code == 200, (
-            "Проверьте, что при GET запросе `/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
+            "Проверьте, что при GET запросе "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
             "без токена авторизации возвращается статус 200"
         )
         data = response.json()
         assert data.get("text") == "rewq", (
-            "Проверьте, что при PATCH запросе `/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
+            "Проверьте, что при PATCH запросе "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
             "изменяете значение `text`."
         )
 
@@ -208,8 +251,10 @@ class Test06CommentAPI:
             f'{pre_url}{comments[2]["id"]}/', data=data
         )
         assert response.status_code == 403, (
-            "Проверьте, что при PATCH запросе `/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
-            "от обычного пользователя при попытки изменить не свой отзыв возвращается статус 403"
+            "Проверьте, что при PATCH запросе "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
+            "от обычного пользователя при попытки изменить "
+            "не свой отзыв возвращается статус 403"
         )
 
         data = {"text": "jdfk"}
@@ -217,25 +262,29 @@ class Test06CommentAPI:
             f'{pre_url}{comments[1]["id"]}/', data=data
         )
         assert response.status_code == 200, (
-            "Проверьте, что при PATCH запросе `/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
+            "Проверьте, что при PATCH запросе "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
             "возвращается статус 200"
         )
         data = response.json()
         assert data.get("text") == "jdfk", (
-            "Проверьте, что при PATCH запросе `/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
+            "Проверьте, что при PATCH запросе "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
             "возвращаете данные объекта. Значение `text` изменено."
         )
 
         client_moderator = auth_client(moderator)
         response = client_moderator.delete(f'{pre_url}{comments[1]["id"]}/')
         assert response.status_code == 204, (
-            "Проверьте, что при DELETE запросе `/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
+            "Проверьте, что при DELETE запросе "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
             "возвращаете статус 204"
         )
         response = admin_client.get(f"{pre_url}")
         test_data = response.json()["results"]
         assert len(test_data) == len(comments) - 1, (
-            "Проверьте, что при DELETE запросе `/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
+            "Проверьте, что при DELETE запросе "
+            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
             "удаляете объект"
         )
 
@@ -244,12 +293,14 @@ class Test06CommentAPI:
         data = {"text": "jdfk"}
         response = client_user.patch(pre_url, data=data)
         assert response.status_code == 403, (
-            f"Проверьте, что при PATCH запросе `/api/v1/titles/{{title_id}}/reviews/{{review_id}}/` "
+            f"Проверьте, что при PATCH запросе "
+            f"`/api/v1/titles/{{title_id}}/reviews/{{review_id}}/` "
             f"с токеном авторизации {user_name} возвращается статус 403"
         )
         response = client_user.delete(pre_url)
         assert response.status_code == 403, (
-            f"Проверьте, что при DELETE запросе `/api/v1/titles/{{title_id}}/reviews/{{review_id}}/` "
+            f"Проверьте, что при DELETE запросе "
+            f"`/api/v1/titles/{{title_id}}/reviews/{{review_id}}/` "
             f"с токеном авторизации {user_name} возвращается статус 403"
         )
 
@@ -262,7 +313,8 @@ class Test06CommentAPI:
         data = {"text": "jdfk"}
         response = client.post(f"{pre_url}", data=data)
         assert response.status_code == 401, (
-            "Проверьте, что при POST запросе `/api/v1/titles/{{title_id}}/reviews/{{review_id}}/comments/` "
+            "Проверьте, что при POST запросе "
+            "`/api/v1/titles/{{title_id}}/reviews/{{review_id}}/comments/` "
             "без токена авторизации возвращается статус 401"
         )
         response = client.patch(f'{pre_url}{comments[1]["id"]}/', data=data)

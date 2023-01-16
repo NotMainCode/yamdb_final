@@ -21,7 +21,8 @@ if PROJECT_DIR_NAME not in root_dir_content or not os.path.isdir(
     os.path.join(BASE_DIR, PROJECT_DIR_NAME)
 ):
     assert False, (
-        f"В директории `{BASE_DIR}` не найдена папка c проектом `{PROJECT_DIR_NAME}`. "
+        f"В директории `{BASE_DIR}` не найдена папка "
+        f"c проектом `{PROJECT_DIR_NAME}`. "
         f"Убедитесь, что у вас верная структура проекта."
     )
 
