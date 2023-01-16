@@ -4,6 +4,10 @@ services:
   db:
     image: postgres:13.0-alpine
     restart: on-failure
+    environment:
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
     volumes:
       - postgresql:/var/lib/postgresql/data/
     healthcheck:
@@ -15,6 +19,16 @@ services:
   web:
     image: notmaincode/api_yamdb:latest
     restart: on-failure
+    environment:
+      - DB_ENGINE
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DJANGO_SECRET_KEY
+    env_file:
+      - .env
     volumes:
       - static_value:/app/static/
       - media_value:/app/media/
