@@ -59,7 +59,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.SERVER_PASSPHRASE }}
           script: |
-            echo '${{ secrets.ENV_FILE }}' > ./.env
+            echo "${{ secrets.ENV_FILE }}" > ./.env
             docker pull ${{ secrets.DOCKER_REPO }}:latest
             docker compose up -d
             docker compose exec web python manage.py collectstatic --no-input
