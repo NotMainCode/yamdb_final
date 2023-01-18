@@ -78,20 +78,20 @@ SERVER_PASSPHRASE=<server_passphrase>
 SSH_KEY=<--BEGIN OPENSSH PRIVATE KEY--...--END OPENSSH PRIVATE KEY--> # cat ~/.ssh/id_rsa
 TELEGRAM_TO=<telegram_account_ID> # https://telegram.im/@userinfobot?lang=en
 TELEGRAM_TOKEN=<telegram_bot_token> # https://t.me/botfather
-```
 
->ENV_FILE variable value
->```
->DB_ENGINE=django.db.backends.postgresql
->POSTGRES_DB=<database name>
->POSTGRES_USER=<username>
->POSTGRES_PASSWORD=<password> 
->DB_HOST=db
->DB_PORT=5432
->DJANGO_SECRET_KEY=<Django_secret_key>
->DOCKER_REPO=<docker_username>/<image name>
->SERVER_HOST=<server_pub_ip>
->SERVER_URL=http://<server_pub_ip>/admin
+
+- ENV_FILE variable value
+
+DB_ENGINE=django.db.backends.postgresql
+POSTGRES_DB=<database name>
+POSTGRES_USER=<username>
+POSTGRES_PASSWORD=<password> 
+DB_HOST=db
+DB_PORT=5432
+DJANGO_SECRET_KEY=<Django_secret_key>
+DOCKER_REPO=<docker_username>/<image name>
+SERVER_HOST=<server_pub_ip>
+SERVER_URL=http://<server_pub_ip>/admin
 >```
 
 
