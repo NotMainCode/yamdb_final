@@ -21,7 +21,7 @@ jobs:
           pip install flake8==3.5 pep8-naming flake8-broken-line flake8-return flake8-isort==3.0.1 -r api_yamdb/requirements.txt
       - name: Test with flake8
         run:
-          python -m flake8 . --ignore W503, I001 --exclude api_yamdb/tests/, tests/, */migrations/ --pre-file-ignores */settings.py:E501 --max-complexity 10
+          python -m flake8 . --ignore W503, I001 --exclude api_yamdb/tests/, tests/, */migrations/ --max-complexity 10
       - name: Django tests
         env:
           DB_HOST: localhost
