@@ -18,13 +18,13 @@ and rate the creation in the range from one to ten (an integer);
 from user ratings, an average rating of the creation is formed - rating (integer).
 A user can leave only one review per creation.
 ###
-Full API documentation is available at endpoint: ```redoc/```
+Full API documentation is available at endpoint: ```redoc/``` ([temporary URL](http://51.250.25.37/admin))
 
 ## Examples of requests
 
 - user registration *(POST)*
 >api/v1/auth/signup/ 
->```
+>```json
 >{
 >    "username": "my_username",
 >    "email": "my_email"
@@ -33,23 +33,17 @@ Full API documentation is available at endpoint: ```redoc/```
 
 - getting access JWT-token *(POST)*
 >api/v1/auth/token/ 
->```
+>```json
 >{
 >    "username": "my_username",
 >    "confirmation_code": "my_confirmation_code"
 >}
 >```
 
-## CI/CD based on GitHub Actions.
-
-GitHub Actions workflow jobs:
-- tests - functional tests, flake8 tests;
-- build_and_push_to_docker_hub - create and push the application image to the DockerHub repository
-- deploy - download images of Django application, postgres and nginx
-  from the DockerHub repository to a remote server. Creation and start containers.
-  Django app: collectstatic, migrate.
-
-GitHub Actions workflow trigger: ```push```
+## Triggers of GitHub Actions workflow
+- ```push to any branch``` - run flake8 and functional tests
+- ```push to master branch``` - push the app image to the DockerHub repository, 
+run project on remote server, Django app: collectstatic, migrate
 
 ## Technology
 
@@ -67,52 +61,48 @@ Docker Compose 2.14.2
 
 PostgreSQL 13.0-alpine
 
+Nginx 1.21.3-alpine
+
 GitHub Actions
 
-## CI/CD setup.
+## Launch
 
 - Create secret repository variables ([documentation](https://docs.github.com/en/actions/learn-github-actions/variables#creating-configuration-variables-for-an-environment)).
 ```
-DB_ENGINE=django.db.backends.postgresql # indicate that we are working with postgresql
-POSTGRES_DB=postgres # database name
-POSTGRES_USER=postgres # login to connect to the database
-POSTGRES_PASSWORD=postgres # database connection password
-DB_HOST=db # name of the service (container)
-DB_PORT=5432 # port for connecting to the database
-
-DJANGO_SECRET_KEY=<Django_secret_key>
-
 DOCKER_USERNAME=<docker_username>
 DOCKER_PASSWORD=<docker_password>
 DOCKER_REPO=<docker_username>/<image name>
-
 SERVER_HOST=<server_pub_ip>
-SERVER_PASSPHRASE=<server_passphrase>
 SERVER_USER=<username>
-
-SSH_KEY=<private key from a computer that has access to the server> # command to receive: cat ~/.ssh/id_rsa
-
+SERVER_PASSPHRASE=<server_passphrase>
+SSH_KEY=<--BEGIN OPENSSH PRIVATE KEY--...--END OPENSSH PRIVATE KEY--> # cat ~/.ssh/id_rsa
 TELEGRAM_TO=<telegram_account_ID> # https://telegram.im/@userinfobot?lang=en
 TELEGRAM_TOKEN=<telegram_bot_token> # https://t.me/botfather
 ```
 
-- Specify the public IP address of the server in the *docker-compose.yaml* and *nginx/default.conf* files.
-```
-...test: [ "CMD", "curl", "-f", "http://<server_pub_ip>/admin" ]...
-```
-```
-...server_name <server_pub_ip>;...
-```
+>ENV_FILE variable value
+>```
+>DB_ENGINE=django.db.backends.postgresql
+>POSTGRES_DB=<database name>
+>POSTGRES_USER=<username>
+>POSTGRES_PASSWORD=<password> 
+>DB_HOST=db
+>DB_PORT=5432
+>DJANGO_SECRET_KEY=<Django_secret_key>
+>DOCKER_REPO=<docker_username>/<image name>
+>SERVER_HOST=<server_pub_ip>
+>SERVER_URL=http://<server_pub_ip>/admin
+>```
 
-- Copy *docker-compose.yaml*, *deploy_job.sh* files and *nginx* folder to the server.
-```
+
+- Copy *docker-compose.yaml* file and *nginx* folder to the server.
+```shell
 scp <path_to_file>/docker-compose.yaml <username>@<server_pub_ip>:/home/<username>
-scp <path_to_file>/deploy_job.sh <username>@<server_pub_ip>:/home/<username>
 scp -r <path_to_folder>/nginx <username>@<server_pub_ip>:/home/<username>
 ```
 
 - Connect to the server.
-```
+```shell
 ssh <username>@<server_pub_ip>
 ```
 
@@ -120,22 +110,24 @@ Install [docker](https://docs.docker.com/engine/install/ubuntu/)
 and [compose plugin](https://docs.docker.com/compose/install/linux/#install-the-plugin-manually).
 Follow the [steps after installing Docker Engine](https://docs.docker.com/engine/install/linux-postinstall/).
 ###
-After the successful completion of the GitHub Actions workflow,
-the project is available at: ```http://<server_pub_ip>/admin/```.
+
+After activation and successful completion of the GitHub Actions workflow,
+the project is available at: ```http://<server_pub_ip>/admin/```
+
 ###
 
 - Create superuser
-```
+```shell
 docker compose exec web python manage.py createsuperuser
 ```
 
 - Enter test data into the database
-```
+```shell
 docker compose exec web python manage.py loaddata db_fixtures.json
 ```
 
 - Create a database dump
-```
+```shell
 sudo docker compose exec web python manage.py dumpdata > db_dump.json
 ```
 

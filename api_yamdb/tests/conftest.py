@@ -6,15 +6,12 @@ from django.utils.version import get_version
 root_dir = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 )
-print(root_dir)
 sys.path.append(root_dir)
 
 BASE_DIR = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 )
-print(BASE_DIR)
 root_dir_content = os.listdir(BASE_DIR)
-print(root_dir_content)
 PROJECT_DIR_NAME = "api_yamdb"
 # проверяем, что в корне репозитория лежит папка с проектом
 if PROJECT_DIR_NAME not in root_dir_content or not os.path.isdir(
