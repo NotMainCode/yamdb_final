@@ -92,7 +92,7 @@ DJANGO_SECRET_KEY=<Django_secret_key>
 DOCKER_REPO=<docker_username>/<image name>
 SERVER_HOST=<server_pub_ip>
 SERVER_URL=http://<server_pub_ip>/admin
->```
+```
 
 
 - Copy *docker-compose.yaml* file and *nginx* folder to the server.
