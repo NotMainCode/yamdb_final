@@ -8,16 +8,19 @@ class Test06CommentAPI:
     def test_01_comment_not_auth(self, client, admin_client, admin):
         reviews, titles, _, _ = create_reviews(admin_client, admin)
         response = client.get(
-            f'/api/v1/titles/{titles[0]["id"]}/reviews/{reviews[0]["id"]}/comments/'
+            f'/api/v1/titles/{titles[0]["id"]}'
+            f'/reviews/{reviews[0]["id"]}/comments/'
         )
         assert response.status_code != 404, (
             "Страница "
-            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
+            "`/api/v1/titles/{title_id}"
+            "/reviews/{review_id}/comments/` "
             "не найдена, проверьте этот адрес в *urls.py*"
         )
         assert response.status_code == 200, (
             "Проверьте, что при GET запросе "
-            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
+            "`/api/v1/titles/{title_id}"
+            "/reviews/{review_id}/comments/` "
             "без токена авторизации возвращается статус 200"
         )
 
@@ -29,7 +32,8 @@ class Test06CommentAPI:
         )
         assert response.status_code == 201, (
             "Проверьте, что при POST запросе "
-            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
+            "`/api/v1/titles/{title_id}"
+            "/reviews/{review_id}/comments/` "
             "с правильными данными возвращает статус 201, "
             "api доступен для любого аутентифицированного пользователя"
         )
@@ -42,12 +46,14 @@ class Test06CommentAPI:
         client_moderator = auth_client(moderator)
         data = {}
         response = admin_client.post(
-            f'/api/v1/titles/{titles[0]["id"]}/reviews/{reviews[0]["id"]}/comments/',
+            f'/api/v1/titles/{titles[0]["id"]}'
+            f'/reviews/{reviews[0]["id"]}/comments/',
             data=data,
         )
         assert response.status_code == 400, (
             "Проверьте, что при POST запросе "
-            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/` "
+            "`/api/v1/titles/{title_id}"
+            "/reviews/{review_id}/comments/` "
             "с не правильными данными возвращает статус 400"
         )
         self.create_comment(
@@ -89,7 +95,8 @@ class Test06CommentAPI:
         )
         data = {"text": "аывв"}
         response = admin_client.post(
-            f'/api/v1/titles/{titles[0]["id"]}/reviews/{reviews[0]["id"]}/comments/',
+            f'/api/v1/titles/{titles[0]["id"]}'
+            f'/reviews/{reviews[0]["id"]}/comments/',
             data=data,
         )
         assert response.status_code == 201, (
@@ -99,7 +106,8 @@ class Test06CommentAPI:
         )
 
         response = admin_client.get(
-            f'/api/v1/titles/{titles[0]["id"]}/reviews/{reviews[0]["id"]}/comments/'
+            f'/api/v1/titles/{titles[0]["id"]}'
+            f'/reviews/{reviews[0]["id"]}/comments/'
         )
         assert response.status_code == 200, (
             "Проверьте, что при GET запросе "
@@ -188,33 +196,41 @@ class Test06CommentAPI:
         comments, reviews, titles, user, moderator = create_comments(
             admin_client, admin
         )
-        pre_url = f'/api/v1/titles/{titles[0]["id"]}/reviews/{reviews[0]["id"]}/comments/'
+        pre_url = (
+            f'/api/v1/titles/{titles[0]["id"]}'
+            f'/reviews/{reviews[0]["id"]}/comments/'
+        )
         response = client.get(f'{pre_url}{comments[0]["id"]}/')
         assert response.status_code != 404, (
             "Страница "
-            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
+            "`/api/v1/titles/{title_id}/reviews"
+            "/{review_id}/comments/{comment_id}/` "
             "не найдена, проверьте этот адрес в *urls.py*"
         )
         assert response.status_code == 200, (
             "Проверьте, что при GET запросе "
-            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
+            "`/api/v1/titles/{title_id}/reviews"
+            "/{review_id}/comments/{comment_id}/` "
             "без токена авторизации возвращается статус 200"
         )
         data = response.json()
         assert type(data.get("id")) == int, (
             "Проверьте, что при GET запросе "
-            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
+            "`/api/v1/titles/{title_id}/reviews"
+            "/{review_id}/comments/{comment_id}/` "
             "возвращаете данные объекта. "
             "Значение `id` нет или не является целым числом."
         )
         assert data.get("text") == reviews[0]["text"], (
             "Проверьте, что при GET запросе "
-            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
+            "`/api/v1/titles/{title_id}/reviews"
+            "/{review_id}/comments/{comment_id}/` "
             "возвращаете данные объекта. Значение `text` неправильное."
         )
         assert data.get("author") == reviews[0]["author"], (
             "Проверьте, что при GET запросе "
-            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
+            "`/api/v1/titles/{title_id}/reviews"
+            "/{review_id}/comments/{comment_id}/` "
             "возвращаете данные объекта. Значение `author` неправильное."
         )
 
@@ -224,25 +240,29 @@ class Test06CommentAPI:
         )
         assert response.status_code == 200, (
             "Проверьте, что при PATCH запросе "
-            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
+            "`/api/v1/titles/{title_id}/reviews"
+            "/{review_id}/comments/{comment_id}/` "
             "возвращается статус 200"
         )
         data = response.json()
         assert data.get("text") == "rewq", (
             "Проверьте, что при PATCH запросе "
-            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
+            "`/api/v1/titles/{title_id}/reviews"
+            "/{review_id}/comments/{comment_id}/` "
             "возвращаете данные объекта. Значение `text` изменено."
         )
         response = admin_client.get(f'{pre_url}{comments[0]["id"]}/')
         assert response.status_code == 200, (
             "Проверьте, что при GET запросе "
-            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
+            "`/api/v1/titles/{title_id}/reviews"
+            "/{review_id}/comments/{comment_id}/` "
             "без токена авторизации возвращается статус 200"
         )
         data = response.json()
         assert data.get("text") == "rewq", (
             "Проверьте, что при PATCH запросе "
-            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
+            "`/api/v1/titles/{title_id}/reviews"
+            "/{review_id}/comments/{comment_id}/` "
             "изменяете значение `text`."
         )
 
@@ -253,7 +273,8 @@ class Test06CommentAPI:
         )
         assert response.status_code == 403, (
             "Проверьте, что при PATCH запросе "
-            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
+            "`/api/v1/titles/{title_id}/reviews"
+            "/{review_id}/comments/{comment_id}/` "
             "от обычного пользователя при попытки изменить "
             "не свой отзыв возвращается статус 403"
         )
@@ -264,13 +285,15 @@ class Test06CommentAPI:
         )
         assert response.status_code == 200, (
             "Проверьте, что при PATCH запросе "
-            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
+            "`/api/v1/titles/{title_id}/reviews"
+            "/{review_id}/comments/{comment_id}/` "
             "возвращается статус 200"
         )
         data = response.json()
         assert data.get("text") == "jdfk", (
             "Проверьте, что при PATCH запросе "
-            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
+            "`/api/v1/titles/{title_id}/reviews"
+            "/{review_id}/comments/{comment_id}/` "
             "возвращаете данные объекта. Значение `text` изменено."
         )
 
@@ -278,14 +301,16 @@ class Test06CommentAPI:
         response = client_moderator.delete(f'{pre_url}{comments[1]["id"]}/')
         assert response.status_code == 204, (
             "Проверьте, что при DELETE запросе "
-            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
+            "`/api/v1/titles/{title_id}/reviews"
+            "/{review_id}/comments/{comment_id}/` "
             "возвращаете статус 204"
         )
         response = admin_client.get(f"{pre_url}")
         test_data = response.json()["results"]
         assert len(test_data) == len(comments) - 1, (
             "Проверьте, что при DELETE запросе "
-            "`/api/v1/titles/{title_id}/reviews/{review_id}/comments/{comment_id}/` "
+            "`/api/v1/titles/{title_id}/reviews"
+            "/{review_id}/comments/{comment_id}/` "
             "удаляете объект"
         )
 
@@ -310,7 +335,10 @@ class Test06CommentAPI:
         comments, reviews, titles, user, moderator = create_comments(
             admin_client, admin
         )
-        pre_url = f'/api/v1/titles/{titles[0]["id"]}/reviews/{reviews[0]["id"]}/comments/'
+        pre_url = (
+            f'/api/v1/titles/{titles[0]["id"]}'
+            f'/reviews/{reviews[0]["id"]}/comments/'
+        )
         data = {"text": "jdfk"}
         response = client.post(f"{pre_url}", data=data)
         assert response.status_code == 401, (
@@ -321,13 +349,15 @@ class Test06CommentAPI:
         response = client.patch(f'{pre_url}{comments[1]["id"]}/', data=data)
         assert response.status_code == 401, (
             "Проверьте, что при PATCH запросе "
-            "`/api/v1/titles/{{title_id}}/reviews/{{review_id}}/comments/{{comment_id}}/` "
+            "`/api/v1/titles/{{title_id}}/reviews"
+            "/{{review_id}}/comments/{{comment_id}}/` "
             "без токена авторизации возвращается статус 401"
         )
         response = client.delete(f'{pre_url}{comments[1]["id"]}/')
         assert response.status_code == 401, (
             "Проверьте, что при DELETE запросе "
-            "`/api/v1/titles/{{title_id}}/reviews/{{review_id}}/comments/{{comment_id}}/` "
+            "`/api/v1/titles/{{title_id}}/reviews"
+            "/{{review_id}}/comments/{{comment_id}}/` "
             "без токена авторизации возвращается статус 401"
         )
         self.check_permissions(
