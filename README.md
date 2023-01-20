@@ -73,8 +73,8 @@ DOCKER_USERNAME=<docker_username>
 DOCKER_PASSWORD=<docker_password>
 DOCKER_REPO=<docker_username>/<image name>
 SERVER_HOST=<server_pub_ip>
-SERVER_USER=<username>
 SERVER_PASSPHRASE=<server_passphrase>
+SERVER_USER=<username>
 SSH_KEY=<--BEGIN OPENSSH PRIVATE KEY--...--END OPENSSH PRIVATE KEY--> # cat ~/.ssh/id_rsa
 TELEGRAM_TO=<telegram_account_ID> # https://telegram.im/@userinfobot?lang=en
 TELEGRAM_TOKEN=<telegram_bot_token> # https://t.me/botfather

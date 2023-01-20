@@ -15,7 +15,7 @@ services:
       retries: 3
       start_period: 40s
   web:
-    image: notmaincode/api_yamdb:latest
+    image: $DOCKER_REPO:latest
     restart: on-failure
     env_file:
       - ./.env
