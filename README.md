@@ -128,7 +128,7 @@ docker compose exec web python manage.py loaddata db_fixtures.json
 
 - Create a database dump
 ```shell
-sudo docker compose exec web python manage.py dumpdata > db_dump.json
+docker compose exec web python manage.py dumpdata > db_dump.json
 ```
 
 ## Authors
