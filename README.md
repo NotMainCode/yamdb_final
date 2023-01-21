@@ -41,9 +41,10 @@ Full API documentation is available at endpoint: ```redoc/``` ([temporary URL](h
 >```
 
 ## Triggers of GitHub Actions workflow
-- ```push to any branch``` - run flake8 and functional tests
-- ```push to master branch``` - push the app image to the DockerHub repository, 
-run project on remote server, Django app: collectstatic, migrate
+- ```push to any branch``` - running flake8 and functional tests
+- ```push to master branch``` - pushing the app image to the DockerHub repository, 
+running project on remote server, sending Telegram message about the successful completion of the workflow.
+Django app: collectstatic, migrate
 
 ## Technology
 
