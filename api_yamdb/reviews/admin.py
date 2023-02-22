@@ -38,13 +38,19 @@ class TitleAdmin(admin.ModelAdmin):
         "name",
         "year",
         "category",
+        "genres_display",
         "description",
     )
     list_editable = ("category",)
     search_fields = ("name", "year")
     list_filter = ("category",)
+    filter_horizontal = ("genre",)
     empty_value_display = "-пусто-"
 
+    def genres_display(self, obj):
+        return ", ".join([genre.name for genre in obj.genre.all()])
+
+    genres_display.short_description = "genres"
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
