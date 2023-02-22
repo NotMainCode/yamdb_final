@@ -62,7 +62,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "api_yamdb.wsgi.application"
 
-DATABASES = {
+DEBUG_TRUE_DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+    }
+}
+
+DEBUG_FALSE_DATABASES = {
     "default": {
         "ENGINE": os.getenv("DB_ENGINE", "django.db.backends.postgresql"),
         "NAME": os.getenv("POSTGRES_DB", "postgres"),
@@ -72,6 +79,11 @@ DATABASES = {
         "PORT": os.getenv("DB_PORT", "5432"),
     }
 }
+
+if DEBUG:
+    DATABASES = DEBUG_TRUE_DATABASES
+else:
+    DATABASES = DEBUG_FALSE_DATABASES
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -96,7 +108,7 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
-STATICFILES_DIRS = ["/app/data"]
+STATICFILES_DIRS = ("./data",)
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")

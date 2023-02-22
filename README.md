@@ -1,5 +1,7 @@
 # API of project "YaMDb".
+
 ![yamdb workflow](https://github.com/NotMainCode/yamdb_final/actions/workflows/yamdb_workflow.yaml/badge.svg)
+
 ## Description
 
 The YaMDb project collects user feedback on creations (Title).
@@ -17,8 +19,12 @@ Users can leave text reviews for creations
 and rate the creation in the range from one to ten (an integer);
 from user ratings, an average rating of the creation is formed - rating (integer).
 A user can leave only one review per creation.
-###
-Full API documentation is available at endpoint: ```redoc/``` ([temporary URL](http://51.250.25.37/admin))
+
+### Temporary links
+
+[YaMDb Admin Site](http://51.250.102.37//admin)
+
+[YaMDb API documentation](http://51.250.102.37//redoc)
 
 ## Examples of requests
 
@@ -134,11 +140,8 @@ docker compose exec web python manage.py dumpdata > db_dump.json
 
 ## Authors
 
-[NotMainCode](https://github.com/NotMainCode)
+[NotMainCode](https://github.com/NotMainCode) - Auth, Users, CI/CD
 
-[Vas1l1y](https://github.com/Vas1l1y)
+[Vas1l1y](https://github.com/Vas1l1y) - Titles, Categories, Genres
 
-[SerMikh1981](https://github.com/SerMikh1981)
-
-###
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[SerMikh1981](https://github.com/SerMikh1981) - Reviews, Comments, import data from CSV files

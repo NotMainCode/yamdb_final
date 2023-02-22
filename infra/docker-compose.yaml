@@ -24,6 +24,9 @@ services:
       - media_value:/app/media/
     depends_on:
       - db
+    command: [
+      "./wait-for-it.sh", "db:5432", "--strict", "--timeout=300", "--", "./web_start.sh"
+    ]
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8000/admin" ]
       interval: 1m30s
