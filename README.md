@@ -22,9 +22,9 @@ A user can leave only one review per creation.
 
 ### Temporary links
 
-[YaMDb Admin Site](http://51.250.102.37//admin)
+[YaMDb Admin Site](http://51.250.102.37/admin)
 
-[YaMDb API documentation](http://51.250.102.37//redoc)
+[YaMDb API documentation](http://51.250.102.37/redoc)
 
 ## Examples of requests
 
