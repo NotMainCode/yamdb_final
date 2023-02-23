@@ -22,9 +22,9 @@ A user can leave only one review per creation.
 
 ### Temporary links
 
-[YaMDb Admin Site](http://51.250.102.37/admin)
+[YaMDb Admin Site](http://84.201.139.2/admin)
 
-[YaMDb API documentation](http://51.250.102.37/redoc)
+[YaMDb API documentation](http://84.201.139.2/redoc)
 
 ## Examples of requests
 
@@ -140,7 +140,7 @@ docker compose exec web python manage.py dumpdata > db_dump.json
 
 ## Authors
 
-[NotMainCode](https://github.com/NotMainCode) - Auth, Users, CI/CD
+[NotMainCode](https://github.com/NotMainCode) - Auth, Users, containerization, CI/CD
 
 [Vas1l1y](https://github.com/Vas1l1y) - Titles, Categories, Genres
 
