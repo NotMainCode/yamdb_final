@@ -10,6 +10,7 @@ from users.models import User
 
 
 def unacceptable_username(username):
+    """Check username != settings.UNACCEPTABLE_USERNAME."""
     if username.lower() == settings.UNACCEPTABLE_USERNAME:
         raise serializers.ValidationError(
             f"The name '{settings.UNACCEPTABLE_USERNAME}' is not allowed."
